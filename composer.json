@@ -1,0 +1,39 @@
+{
+  "name": "wirus15/enum-bundle",
+  "type": "symfony-bundle",
+  "version": "0.1",
+  "license": "MIT",
+  "authors": [{
+    "name": "Maciej Krawczyk",
+    "email": "wirus15@gmail.com"
+  }],
+  "autoload": {
+    "psr-4": {
+      "Enum\\Bundle": "Bundle"
+    }
+  },
+  "require": {
+    "php": ">=5.5",
+    "wirus15/enum": "~0.1",
+    "symfony/framework-bundle": "~2.3|~3.0",
+    "symfony/translation": "~2.3|~3.0",
+    "doctrine/orm": "~2.4"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^4.8",
+    "phpspec/phpspec": "~2.0"
+  },
+  "repositories": [{
+    "type": "vcs",
+    "url": "https://github.com/wirus15/enum"
+  }],
+  "config": {
+    "bin-dir": "bin"
+  },
+  "scripts": {
+    "test": [
+      "bin/phpunit test",
+      "bin/phpspec run"
+    ]
+  }
+}

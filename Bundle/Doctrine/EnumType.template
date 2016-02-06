@@ -1,0 +1,15 @@
+namespace {{namespace}} {
+
+    final class {{class_name}} extends \Enum\Bundle\Doctrine\EnumType
+    {
+        public function getName()
+        {
+            return '{{type_name}}';
+        }
+
+        protected function getEnumClass()
+        {
+            return '{{enum_class}}';
+        }
+    }
+}
