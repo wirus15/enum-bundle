@@ -25,7 +25,7 @@ class EnumTypeGenerator
     public function __construct(EnumTypeCache $cache = null)
     {
         $this->cache = $cache;
-        $this->template = require(__DIR__.'/EnumType.template');
+        $this->template = file_get_contents(__DIR__.'/EnumType.template');
 
         if ($this->cache) {
             $this->cache->load();

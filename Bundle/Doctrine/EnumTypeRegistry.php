@@ -34,7 +34,7 @@ class EnumTypeRegistry
             return;
         }
 
-        if (!preg_match('/^[A-Za-z0-9_]$/', $name)) {
+        if (!preg_match('/^[A-Za-z0-9_]+$/', $name)) {
             throw new EnumException('Enum type name contains invalid characters. Only letters, numbers and underscores are allowed.');
         }
 

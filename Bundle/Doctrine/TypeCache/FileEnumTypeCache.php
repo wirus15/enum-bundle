@@ -31,7 +31,9 @@ class FileEnumTypeCache implements EnumTypeCache
      */
     public function load()
     {
-        require_once $this->filePath;
+        if ($this->exists()) {
+            require_once $this->filePath;
+        }
     }
 
     /**
@@ -41,6 +43,9 @@ class FileEnumTypeCache implements EnumTypeCache
      */
     public function save($className, $classBody)
     {
+        if (!$this->exists()) {
+            $this->clear();
+        }
         file_put_contents($this->filePath, $classBody, FILE_APPEND);
     }
 
@@ -49,6 +54,6 @@ class FileEnumTypeCache implements EnumTypeCache
      */
     public function clear()
     {
-        file_put_contents($this->filePath, '');
+        file_put_contents($this->filePath, "<?php\n");
     }
 }

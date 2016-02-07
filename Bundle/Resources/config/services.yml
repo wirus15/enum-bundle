@@ -1,0 +1,15 @@
+services:
+  enum.type.registry:
+    class: Enum\Bundle\Doctrine\EnumTypeRegistry
+    arguments:
+      - "@enum.type.generator"
+
+  enum.type.generator:
+    class: Enum\Bundle\Doctrine\EnumTypeGenerator
+    arguments:
+      - "@enum.type.cache"
+
+  enum.type.cache:
+    class: Enum\Bundle\Doctrine\TypeCache\FileEnumTypeCache
+    arguments:
+      - "%kernel.cache_dir%/enum.cache.php"
