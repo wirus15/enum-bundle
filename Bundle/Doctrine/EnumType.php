@@ -4,6 +4,7 @@ namespace Enum\Bundle\Doctrine;
 
 use Doctrine\DBAL\Platforms\AbstractPlatform;
 use Doctrine\DBAL\Types\Type;
+use Enum\Enum;
 
 abstract class EnumType extends Type
 {
@@ -22,8 +23,15 @@ abstract class EnumType extends Type
      */
     public function getSQLDeclaration(array $fieldDeclaration, AbstractPlatform $platform)
     {
-        $sqlType = $this->getManager()->getSqlType($this->getEnumClass());
-        return self::getType($sqlType)->getSQLDeclaration($fieldDeclaration, $platform);
+        $items = call_user_func([$this->getEnumClass(), 'getItems']);
+        $values = array_map(function(Enum $enum) {
+            return '\''.$enum->getValue().'\'';
+        }, $items);
+
+        return sprintf(
+            'ENUM(%s) COMMENT \'(DC2Type:%s)\'',
+            implode(', ', $values),
+            $this->getName());
     }
 
     /**
@@ -43,6 +51,6 @@ abstract class EnumType extends Type
      */
     public function convertToPHPValue($value, AbstractPlatform $platform)
     {
-        return $this->getManager()->get($this->getEnumClass(), $value);
+        return call_user_func([$this->getEnumClass(), 'get'], $value);
     }
 }
