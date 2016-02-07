@@ -14,7 +14,7 @@
   },
   "require": {
     "php": ">=5.5",
-    "wirus15/enum": "~0.1",
+    "wirus15/enum": "~0.2",
     "symfony/framework-bundle": "~2.3|~3.0",
     "symfony/translation": "~2.3|~3.0",
     "doctrine/orm": "~2.4"

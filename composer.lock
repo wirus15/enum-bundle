@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "dae06009a637efc6a761f933f601303a",
-    "content-hash": "60e6a09d2d73eb372d8eb3a95a23da90",
+    "hash": "bb9caf89b487b5020c013f4fd2494f48",
+    "content-hash": "884562d836c78111f256ae8d49f8130d",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -1165,24 +1165,24 @@
         },
         {
             "name": "wirus15/enum",
-            "version": "0.1",
+            "version": "0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/wirus15/enum.git",
-                "reference": "6c378c1000d81ea49a26364a11f66e27be205e92"
+                "reference": "d7ca0dc977312235dc55d64810268a3df03fae23"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/wirus15/enum/zipball/6c378c1000d81ea49a26364a11f66e27be205e92",
-                "reference": "6c378c1000d81ea49a26364a11f66e27be205e92",
+                "url": "https://api.github.com/repos/wirus15/enum/zipball/d7ca0dc977312235dc55d64810268a3df03fae23",
+                "reference": "d7ca0dc977312235dc55d64810268a3df03fae23",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.5"
             },
             "require-dev": {
-                "phpspec/phpspec": "~2.0",
-                "phpunit/phpunit": "^4.8"
+                "phpspec/phpspec": "~2.4",
+                "phpunit/phpunit": "~5.2"
             },
             "type": "library",
             "autoload": {
@@ -1207,10 +1207,10 @@
                 }
             ],
             "support": {
-                "source": "https://github.com/wirus15/enum/tree/master",
+                "source": "https://github.com/wirus15/enum/tree/0.2",
                 "issues": "https://github.com/wirus15/enum/issues"
             },
-            "time": "2016-02-06 11:30:48"
+            "time": "2016-02-07 19:22:45"
         }
     ],
     "packages-dev": [

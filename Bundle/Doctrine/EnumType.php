@@ -23,7 +23,7 @@ abstract class EnumType extends Type
      */
     public function getSQLDeclaration(array $fieldDeclaration, AbstractPlatform $platform)
     {
-        $items = call_user_func([$this->getEnumClass(), 'getItems']);
+        $items = Enum::getItems($this->getEnumClass());
         $values = array_map(function(Enum $enum) {
             return '\''.$enum->getValue().'\'';
         }, $items);
@@ -51,6 +51,6 @@ abstract class EnumType extends Type
      */
     public function convertToPHPValue($value, AbstractPlatform $platform)
     {
-        return call_user_func([$this->getEnumClass(), 'get'], $value);
+        return Enum::get($value, $this->getEnumClass());
     }
 }
