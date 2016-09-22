@@ -2,16 +2,11 @@
 
 namespace Enum\Bundle\Doctrine;
 
-use Enum\Bundle\Doctrine\TypeCache\EnumTypeCache;
+use Enum\Enum;
 
 class EnumTypeGenerator
 {
     const CLASS_PREFIX = '__Enum__';
-
-    /**
-     * @var EnumTypeCache
-     */
-    private $cache;
 
     /**
      * @var string
@@ -20,46 +15,32 @@ class EnumTypeGenerator
 
     /**
      * EnumTypeGenerator constructor.
-     * @param EnumTypeCache $cache
      */
-    public function __construct(EnumTypeCache $cache = null)
+    public function __construct()
     {
-        $this->cache = $cache;
         $this->template = file_get_contents(__DIR__.'/EnumType.template');
-
-        if ($this->cache) {
-            $this->cache->load();
-        }
     }
 
     /**
      * @param string $name
      * @param string $enumClass
-     * @return string
+     * @return GenerationResult
      */
     public function generate($name, $enumClass)
     {
         $className = self::CLASS_PREFIX.'\\'.$enumClass;
 
-        if (class_exists($className, false)) {
-            return $className;
-        }
-
         list($namespace, $shortClassName) = $this->divideClassName($className);
-        $class = strtr($this->template, [
+
+        $classContent = strtr($this->template, [
             '{{namespace}}' => $namespace,
             '{{class_name}}' => $shortClassName,
             '{{enum_class}}' => $enumClass,
             '{{type_name}}' => $name,
+            '{{value_type}}' => $this->findValueType($enumClass),
         ]);
 
-        eval($class);
-
-        if ($this->cache) {
-            $this->cache->save($className, $class);
-        }
-
-        return $className;
+        return new GenerationResult($className, $classContent);
     }
 
     /**
@@ -73,5 +54,20 @@ class EnumTypeGenerator
         $namespace = implode('\\', $exploded);
 
         return [$namespace, $shortClassName];
+    }
+
+    /**
+     * @param string $enumClass
+     * @return string
+     */
+    private function findValueType($enumClass)
+    {
+        foreach (Enum::values($enumClass) as $value) {
+            if (!is_int($value)) {
+                return EnumType::ENUM_STRING;
+            }
+        }
+
+        return EnumType::ENUM_INT;
     }
 }

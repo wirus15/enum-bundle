@@ -8,10 +8,18 @@ use Enum\Enum;
 
 abstract class EnumType extends Type
 {
+    const ENUM_INT = 'int';
+    const ENUM_STRING = 'string';
+
     /**
      * @return string
      */
     abstract protected function getEnumClass();
+
+    /**
+     * @return string
+     */
+    abstract protected function getValueType();
 
     /**
      * Gets the SQL declaration snippet for a field of this type.
@@ -23,15 +31,15 @@ abstract class EnumType extends Type
      */
     public function getSQLDeclaration(array $fieldDeclaration, AbstractPlatform $platform)
     {
-        $items = Enum::getItems($this->getEnumClass());
-        $values = array_map(function(Enum $enum) {
-            return '\''.$enum->getValue().'\'';
-        }, $items);
+        $typeDeclaration = $this->getValueType() === self::ENUM_INT ?
+            $platform->getIntegerTypeDeclarationSQL($fieldDeclaration) :
+            $platform->getVarcharTypeDeclarationSQL($fieldDeclaration);
 
         return sprintf(
-            'ENUM(%s) COMMENT \'(DC2Type:%s)\'',
-            implode(', ', $values),
-            $this->getName());
+            '%s "COMMENT \'(DC2Type:%s)\'',
+            $typeDeclaration,
+            $this->getName()
+        );
     }
 
     /**

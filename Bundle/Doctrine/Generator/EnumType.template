@@ -11,5 +11,10 @@ namespace {{namespace}} {
         {
             return '{{enum_class}}';
         }
+
+        protected function getValueType()
+        {
+            return '{{value_type}}';
+        }
     }
 }
