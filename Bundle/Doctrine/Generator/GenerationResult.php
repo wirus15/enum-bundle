@@ -1,6 +1,6 @@
 <?php
 
-namespace Enum\Bundle\Doctrine;
+namespace Enum\Bundle\Doctrine\Generator;
 
 class GenerationResult
 {

@@ -31,15 +31,9 @@ abstract class EnumType extends Type
      */
     public function getSQLDeclaration(array $fieldDeclaration, AbstractPlatform $platform)
     {
-        $typeDeclaration = $this->getValueType() === self::ENUM_INT ?
+        return $this->getValueType() === self::ENUM_INT ?
             $platform->getIntegerTypeDeclarationSQL($fieldDeclaration) :
             $platform->getVarcharTypeDeclarationSQL($fieldDeclaration);
-
-        return sprintf(
-            '%s "COMMENT \'(DC2Type:%s)\'',
-            $typeDeclaration,
-            $this->getName()
-        );
     }
 
     /**
@@ -49,7 +43,7 @@ abstract class EnumType extends Type
      */
     public function convertToDatabaseValue($value, AbstractPlatform $platform)
     {
-        return ($value !== null && $value instanceof Enum) ? $value->getValue() : $value;
+        return ($value !== null && $value instanceof Enum) ? $value->value() : $value;
     }
 
     /**
@@ -60,5 +54,13 @@ abstract class EnumType extends Type
     public function convertToPHPValue($value, AbstractPlatform $platform)
     {
         return Enum::get($value, $this->getEnumClass());
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function requiresSQLCommentHint(AbstractPlatform $platform)
+    {
+        return true;
     }
 }
