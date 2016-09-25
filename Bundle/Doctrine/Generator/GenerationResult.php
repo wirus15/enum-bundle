@@ -8,6 +8,7 @@ class GenerationResult
      * @var string
      */
     private $className;
+
     /**
      * @var string
      */
