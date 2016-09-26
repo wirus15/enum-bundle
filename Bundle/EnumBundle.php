@@ -10,9 +10,11 @@ class EnumBundle extends Bundle
 {
     public function build(ContainerBuilder $container)
     {
-        parent::build($container);
-
         $container->addCompilerPass(new RegisterTypesCompilerPass());
     }
 
+    public function boot()
+    {
+        $this->container->get('enum.type.registry');
+    }
 }

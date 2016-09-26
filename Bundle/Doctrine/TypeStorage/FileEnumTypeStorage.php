@@ -18,6 +18,10 @@ class FileEnumTypeStorage implements EnumTypeStorage
     public function __construct($path)
     {
         $this->path = $path;
+
+        if (!is_dir($path)) {
+            mkdir($path, 0777, true);
+        }
     }
 
     /**
@@ -35,7 +39,7 @@ class FileEnumTypeStorage implements EnumTypeStorage
      */
     public function save($className, $classContent)
     {
-        file_put_contents($this->getTypeFilePath($className), $classContent);
+        file_put_contents($this->getTypeFilePath($className), '<?php ' . $classContent);
     }
 
     /**

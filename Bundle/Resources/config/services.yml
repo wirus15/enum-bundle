@@ -15,6 +15,3 @@ services:
     class: Enum\Bundle\Doctrine\TypeStorage\FileEnumTypeStorage
     arguments:
       - '%kernel.cache_dir%/enum'
-
-  enum.type.storage:
-    alias: enum.type.storage.memory

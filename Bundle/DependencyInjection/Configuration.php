@@ -21,23 +21,14 @@ class Configuration implements ConfigurationInterface
         $rootNode = $treeBuilder->root('enum');
             $rootNode
                 ->children()
-                    ->arrayNode('type')
-                        ->children()
-                            ->enumNode('storage')
-                                ->values(['file', 'memory'])
-                                ->defaultValue('file')
-                                ->isRequired(false)
-                            ->end()
-                        ->end()
+                    ->enumNode('type_storage')
+                        ->values(['file', 'memory'])
+                        ->defaultValue('file')
                     ->end()
                     ->arrayNode('types')
                         ->prototype('scalar')
                     ->end()
                 ->end();
-
-        // Here you should define the parameters that are allowed to
-        // configure your bundle. See the documentation linked above for
-        // more information on that topic.
 
         return $treeBuilder;
     }
