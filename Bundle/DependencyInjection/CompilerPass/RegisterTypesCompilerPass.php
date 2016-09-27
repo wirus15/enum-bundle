@@ -4,40 +4,17 @@ namespace Enum\Bundle\DependencyInjection\CompilerPass;
 
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\Yaml\Yaml;
 
 class RegisterTypesCompilerPass implements CompilerPassInterface
 {
     /**
-     * You can modify the container here before it is dumped to PHP code.
-     *
      * @param ContainerBuilder $container
      */
     public function process(ContainerBuilder $container)
     {
-        $registryDefinition = $container->findDefinition('enum.type.registry');
-
-        $this->registerTypesFromGlobalConfig($registryDefinition, $container);
-        $this->registerTypesFromBundles($registryDefinition, $container);
-    }
-
-    private function registerTypesFromGlobalConfig(Definition $registryDefinition, ContainerBuilder $container)
-    {
-        $config = $container->getExtensionConfig('enum');
-
-        if (!isset($config[0]['types'])) {
-            return;
-        }
-
-        foreach ($config[0]['types'] as $name => $enumClass) {
-            $registryDefinition->addMethodCall('addType', [$name, $enumClass]);
-        }
-    }
-
-    private function registerTypesFromBundles(Definition $registryDefinition, ContainerBuilder $container)
-    {
         $rootDir = $container->getParameter('kernel.root_dir');
+        $registryDefinition = $container->getDefinition('enum.type.storage');
         $configFiles = [];
 
         foreach ($container->getParameter('kernel.bundles') as $bundle => $class) {

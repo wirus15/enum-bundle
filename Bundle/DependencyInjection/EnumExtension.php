@@ -7,11 +7,6 @@ use Symfony\Component\Config\FileLocator;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 use Symfony\Component\DependencyInjection\Loader;
 
-/**
- * This is the class that loads and manages your bundle configuration
- *
- * To learn more see {@link http://symfony.com/doc/current/cookbook/bundles/extension.html}
- */
 class EnumExtension extends Extension
 {
     /**
@@ -21,9 +16,32 @@ class EnumExtension extends Extension
     {
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
-        $container->setAlias('enum.type.storage', 'enum.type.storage.'.$config['type_storage']);
+
+        $this->createStorageAlias($config, $container);
+        $this->registerTypes($config, $container);
 
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
+    }
+
+    /**
+     * @param array $config
+     * @param ContainerBuilder $container
+     */
+    private function createStorageAlias(array $config, ContainerBuilder $container)
+    {
+        $container->setAlias('enum.type.storage', 'enum.type.storage.'.$config['type_storage']);
+    }
+
+    /**
+     * @param array $config
+     * @param ContainerBuilder $container
+     */
+    private function registerTypes(array $config, ContainerBuilder $container)
+    {
+        $registryDefinition = $container->getDefinition('enum.type.registry');
+        foreach ($config['types'] as $name => $enumClass) {
+            $registryDefinition->addMethodCall('addType', [$name, $enumClass]);
+        }
     }
 }
