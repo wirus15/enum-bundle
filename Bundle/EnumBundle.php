@@ -8,11 +8,6 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 class EnumBundle extends Bundle
 {
-    public function build(ContainerBuilder $container)
-    {
-        $container->addCompilerPass(new RegisterTypesCompilerPass());
-    }
-
     public function boot()
     {
         $this->container->get('enum.type.registry');
