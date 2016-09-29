@@ -27,14 +27,6 @@ class EnumTypeAutoloader
     }
 
     /**
-     * @return bool
-     */
-    public function unregister()
-    {
-        return spl_autoload_unregister([$this, 'loadClass']);
-    }
-
-    /**
      * @param string $className
      * @return bool
      */

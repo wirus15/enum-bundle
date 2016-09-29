@@ -50,7 +50,7 @@ class EnumTypeRegistry
         }
 
         if (!is_subclass_of($enumClass, Enum::class)) {
-            throw new \InvalidArgumentException("$enumClass is not a valid enum class.");
+            throw new EnumException("$enumClass is not a valid enum class.");
         }
 
         $typeClass = $this->typeGenerator->getTypeClassName($enumClass);

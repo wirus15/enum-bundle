@@ -9,7 +9,8 @@
   }],
   "autoload": {
     "psr-4": {
-      "Enum\\Bundle\\": "Bundle"
+      "Enum\\Bundle\\": "Bundle",
+      "test\\Enum\\": "test"
     }
   },
   "require": {
