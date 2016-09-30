@@ -1,0 +1,1 @@
+<?php foobar_type_class_content
