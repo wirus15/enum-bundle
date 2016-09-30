@@ -7,16 +7,30 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class EnumBundleTest extends \PHPUnit_Framework_TestCase
 {
+    /**
+     * @var EnumBundle
+     */
+    private $bundle;
+
+    /**
+     * @var ContainerInterface
+     */
+    private $container;
+
+    protected function setUp()
+    {
+        $this->container = \Mockery::mock(ContainerInterface::class);
+        $this->bundle = new EnumBundle();
+        $this->bundle->setContainer($this->container);
+    }
+
     public function testBundleCallsForTypeRegistryDuringBoot()
     {
-        $container = \Mockery::mock(ContainerInterface::class);
-        $container
+        $this->container
             ->shouldReceive('get')
             ->with('enum.type.registry')
             ->once();
 
-        $bundle = new EnumBundle();
-        $bundle->setContainer($container);
-        $bundle->boot();
+        $this->bundle->boot();
     }
 }
