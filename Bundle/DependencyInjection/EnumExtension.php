@@ -18,7 +18,7 @@ class EnumExtension extends Extension
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
 
-        $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
+        $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
         $loader->load('services.yml');
 
         $this->createStorageAlias($config, $container);
@@ -32,7 +32,7 @@ class EnumExtension extends Extension
      */
     private function createStorageAlias(array $config, ContainerBuilder $container)
     {
-        $container->setAlias('enum.type.storage', 'enum.type.storage.'.$config['type_storage']);
+        $container->setAlias('enum.type.storage', 'enum.type.storage.' . $config['type_storage']);
     }
 
     /**
@@ -58,16 +58,19 @@ class EnumExtension extends Extension
 
         foreach ($container->getParameter('kernel.bundles') as $bundle => $class) {
             $reflection = new \ReflectionClass($class);
-            if (file_exists($file = dirname($reflection->getFileName()).'/Resources/config/enum.yml')) {
+            if (file_exists($file = dirname($reflection->getFileName()) . '/Resources/config/enum.yml')) {
                 $configFiles[] = $file;
             }
-            if (file_exists($file = $rootDir.sprintf('/Resources/%s/config/enum.yml', $bundle))) {
+            if (file_exists($file = $rootDir . sprintf('/Resources/%s/config/enum.yml', $bundle))) {
                 $configFiles[] = $file;
             }
         }
 
         foreach ($configFiles as $file) {
-            $config = Yaml::parse(file_get_contents($file));
+            if (!is_array($config = Yaml::parse(file_get_contents($file)))) {
+                continue;
+            }
+
             foreach ($config as $name => $enumClass) {
                 $registryDefinition->addMethodCall('addType', [$name, $enumClass]);
             }
