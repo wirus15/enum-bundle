@@ -1,6 +1,6 @@
 <?php
 
-namespace Enum\Bundle\Doctrine;
+namespace Enum\Bundle\Doctrine\Generator;
 
 class GenerationResult
 {
@@ -8,6 +8,7 @@ class GenerationResult
      * @var string
      */
     private $className;
+
     /**
      * @var string
      */

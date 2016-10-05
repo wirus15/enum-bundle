@@ -1,7 +1,8 @@
 <?php
 
-namespace Enum\Bundle\Doctrine;
+namespace Enum\Bundle\Doctrine\Generator;
 
+use Enum\Bundle\Doctrine\EnumType;
 use Enum\Enum;
 
 class EnumTypeGenerator
@@ -22,13 +23,22 @@ class EnumTypeGenerator
     }
 
     /**
+     * @param string $enumClass
+     * @return string
+     */
+    public function getTypeClassName($enumClass)
+    {
+        return self::CLASS_PREFIX.'\\'.$enumClass;
+    }
+
+    /**
      * @param string $name
      * @param string $enumClass
      * @return GenerationResult
      */
     public function generate($name, $enumClass)
     {
-        $className = self::CLASS_PREFIX.'\\'.$enumClass;
+        $className = $this->getTypeClassName($enumClass);
 
         list($namespace, $shortClassName) = $this->divideClassName($className);
 

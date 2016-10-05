@@ -2,14 +2,16 @@ services:
   enum.type.registry:
     class: Enum\Bundle\Doctrine\EnumTypeRegistry
     arguments:
-      - "@enum.type.generator"
+      - '@enum.type.generator'
+      - '@enum.type.storage'
 
   enum.type.generator:
-    class: Enum\Bundle\Doctrine\EnumTypeGenerator
-    arguments:
-      - "@enum.type.cache"
+    class: Enum\Bundle\Doctrine\Generator\EnumTypeGenerator
 
-  enum.type.cache:
-    class: Enum\Bundle\Doctrine\TypeCache\FileEnumTypeCache
+  enum.type.storage.memory:
+    class: Enum\Bundle\Doctrine\TypeStorage\MemoryEnumTypeStorage
+
+  enum.type.storage.file:
+    class: Enum\Bundle\Doctrine\TypeStorage\FileEnumTypeStorage
     arguments:
-      - "%kernel.cache_dir%/enum.cache.php"
+      - '%kernel.cache_dir%/enum'
