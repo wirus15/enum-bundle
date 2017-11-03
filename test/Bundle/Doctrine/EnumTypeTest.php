@@ -4,12 +4,13 @@ namespace test\Enum\Bundle\Doctrine;
 
 use Doctrine\DBAL\Platforms\AbstractPlatform;
 use Doctrine\DBAL\Types\Type;
+use PHPUnit\Framework\TestCase;
 use test\Enum\Fixtures\FooBar;
 use test\Enum\Fixtures\FooBarType;
 use test\Enum\Fixtures\OneTwo;
 use test\Enum\Fixtures\OneTwoType;
 
-class EnumTypeTest extends \PHPUnit_Framework_TestCase
+class EnumTypeTest extends TestCase
 {
     protected function setUp()
     {

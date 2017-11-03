@@ -2,10 +2,12 @@
 
 namespace test\Enum\Bundle;
 
+use Enum\Bundle\Doctrine\EnumTypeRegistry;
 use Enum\Bundle\EnumBundle;
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use PHPUnit\Framework\TestCase;
+use Symfony\Component\DependencyInjection\Container;
 
-class EnumBundleTest extends \PHPUnit_Framework_TestCase
+class EnumBundleTest extends TestCase
 {
     /**
      * @var EnumBundle
@@ -13,22 +15,25 @@ class EnumBundleTest extends \PHPUnit_Framework_TestCase
     private $bundle;
 
     /**
-     * @var ContainerInterface
+     * @var EnumTypeRegistry
      */
-    private $container;
+    private $registry;
 
     protected function setUp()
     {
-        $this->container = \Mockery::mock(ContainerInterface::class);
+        $this->registry = \Mockery::mock(EnumTypeRegistry::class);
+
+        $container = new Container();
+        $container->set('enum.type.registry', $this->registry);
+
         $this->bundle = new EnumBundle();
-        $this->bundle->setContainer($this->container);
+        $this->bundle->setContainer($container);
     }
 
     public function testBundleCallsForTypeRegistryDuringBoot()
     {
-        $this->container
-            ->shouldReceive('get')
-            ->with('enum.type.registry')
+        $this->registry
+            ->shouldReceive('registerAutoloader')
             ->once();
 
         $this->bundle->boot();

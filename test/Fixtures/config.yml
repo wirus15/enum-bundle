@@ -1,0 +1,9 @@
+enum:
+  doctrine:
+    type_storage: memory
+  enums:
+    foo_bar: test\Enum\Fixtures\FooBar
+    one_two:
+      class: test\Enum\Fixtures\OneTwo
+      doctrine_type: one_two_type
+      translation_prefix: one_two_prefix

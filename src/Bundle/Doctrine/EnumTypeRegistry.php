@@ -3,6 +3,7 @@
 namespace Enum\Bundle\Doctrine;
 
 use Doctrine\DBAL\Types\Type;
+use Doctrine\DBAL\Types\VarDateTimeImmutableType;
 use Enum\Bundle\Doctrine\Generator\EnumTypeGenerator;
 use Enum\Enum;
 use Enum\EnumException;
@@ -20,6 +21,11 @@ class EnumTypeRegistry
     private $typeStorage;
 
     /**
+     * @var EnumTypeAutoloader
+     */
+    private $autoloader;
+
+    /**
      * TypeRegistry constructor.
      * @param EnumTypeGenerator $typeGenerator
      * @param EnumTypeStorage $typeStorage
@@ -29,8 +35,7 @@ class EnumTypeRegistry
         $this->typeGenerator = $typeGenerator;
         $this->typeStorage = $typeStorage;
 
-        $autoloader = new EnumTypeAutoloader($this->typeStorage);
-        $autoloader->register();
+        $this->autoloader = new EnumTypeAutoloader($this->typeStorage);
     }
 
     /**
@@ -45,9 +50,11 @@ class EnumTypeRegistry
             return;
         }
 
+
         if (!preg_match('/^[A-Za-z0-9_]+$/', $typeName)) {
             throw new EnumException('Enum type name contains invalid characters. Only letters, numbers and underscores are allowed.');
         }
+        var_dump('yolo'); exit;
 
         if (!is_subclass_of($enumClass, Enum::class)) {
             throw new EnumException("$enumClass is not a valid enum class.");
@@ -64,11 +71,16 @@ class EnumTypeRegistry
     }
 
     /**
-     * @param $name
+     * @param string $name
      * @return bool
      */
     public function hasType($name)
     {
         return Type::hasType($name);
+    }
+
+    public function registerAutoloader()
+    {
+        $this->autoloader->register();
     }
 }

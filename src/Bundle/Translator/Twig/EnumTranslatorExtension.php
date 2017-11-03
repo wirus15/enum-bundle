@@ -19,7 +19,7 @@ class EnumTranslatorExtension extends \Twig_Extension
     public function getFilters()
     {
         return [
-            new \Twig_SimpleFilter('enum', function (Enum $enum, ?string $locale = null): string {
+            new \Twig_SimpleFilter('readable', function (Enum $enum, ?string $locale = null): string {
                 if ($this->translator->canTranslate($enum, $locale)) {
                     return $this->translator->translate($enum, $locale);
                 }

@@ -1,0 +1,34 @@
+services:
+  enum.type.registry:
+    class: Enum\Bundle\Doctrine\EnumTypeRegistry
+    arguments:
+      - '@enum.type.generator'
+      - '@enum.type.storage'
+
+  enum.type.generator:
+    class: Enum\Bundle\Doctrine\Generator\EnumTypeGenerator
+
+  enum.type.storage.memory:
+    class: Enum\Bundle\Doctrine\TypeStorage\MemoryEnumTypeStorage
+
+  enum.type.storage.file:
+    class: Enum\Bundle\Doctrine\TypeStorage\FileEnumTypeStorage
+    arguments:
+      - '%kernel.cache_dir%/enum'
+
+  enum.translator.humanize:
+    class: Enum\Bundle\Translator\HumanizeEnumTranslator
+
+  enum.translator.translator:
+    class: Enum\Bundle\Translator\TranslatorEnumTranslator
+    arguments:
+      - '@translator.default'
+
+  enum.translator.chained:
+    class: Enum\Bundle\Translator\ChainedEnumTranslator
+    arguments:
+      - '@enum.translator.translator'
+      - '@enum.translator.humanize'
+
+  enum.translator:
+    alias: enum.translator.chained

@@ -17,6 +17,9 @@ class ChainedEnumTranslator implements EnumTranslator
         $this->translators = $translators;
     }
 
+    /**
+     * @throws CannotTranslate
+     */
     public function translate(Enum $enum, ?string $locale = null): string
     {
         foreach ($this->translators as $translator) {
